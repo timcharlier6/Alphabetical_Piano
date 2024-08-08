@@ -9,9 +9,10 @@ export default function processUserTypingInput() {
   const sentenceDisplayElement = document.getElementById("sentenceDisplay");
   const inputElement = document.getElementById("typeInput");
 
-  inputElement.addEventListener("input", () => {
+  inputElement.addEventListener("input", (event) => {
     let arrayValue = inputElement.value.split("");
 
+    // Handle space and newline characters
     if (arrayValue[arrayValue.length - 1] === " ") {
       arrayValue[arrayValue.length - 1] = "␣";
     } else if (arrayValue[arrayValue.length - 1] === "\n") {
@@ -30,10 +31,15 @@ export default function processUserTypingInput() {
       } else if (character === characterSpan.innerText) {
         characterSpan.classList.add("correct");
         characterSpan.classList.remove("incorrect", "underline");
-        const noteId = qwertyToNoteMapping[arrayValue[arrayValue.length - 1]];
-        console.log(noteId);
-        if (noteId && noteId !== " " && noteId !== "\n") {
-          playNote(noteId);
+        if (
+          index === arrayValue.length - 1 && // Ensure it's the current character
+          qwertyToNoteMapping[character] && // Ensure there is a mapped note
+          character !== "␣" && // Exclude space
+          character !== "↵" && // Exclude newline
+          event.data !== null
+        ) {
+          console.log(event.data);
+          playNote(qwertyToNoteMapping[character]);
         }
       } else {
         characterSpan.classList.remove("correct");
@@ -43,15 +49,18 @@ export default function processUserTypingInput() {
       }
     });
 
+    // Underline the next character to type
     if (arrayValue.length < arraySentence.length) {
       arraySentence[arrayValue.length].classList.add("underline");
     }
 
+    // If the entire sentence is correct, reset for the next sentence
     if (arrayValue.length === arraySentence.length && correct) {
       initializeApp();
       inputElement.value = "";
     }
 
+    // If input is incorrect and exceeds the sentence length, reset input
     if (arrayValue.length >= arraySentence.length && !correct) {
       inputElement.value = "";
     }
