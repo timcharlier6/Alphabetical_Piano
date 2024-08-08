@@ -1,7 +1,11 @@
 import { melodies } from "./melodies.mjs";
 import { melodyToQwerty } from "./melodyToQwerty.mjs";
+import playNoise from "./playNoise.mjs";
+import { keyDownToNote } from "./keyDownToNote.mjs";
 
+const synth = new Tone.Synth().toDestination();
 const melody = melodyToQwerty(melodies);
+const keyDownNoteMapping = keyDownToNote();
 console.log(melody);
 
 function getNextMelody() {
@@ -11,6 +15,7 @@ function getNextMelody() {
 function renderNewSentence(melody) {
   const sentenceDisplayElement = document.getElementById("sentenceDisplay");
   sentenceDisplayElement.innerHTML = "";
+  melody.push("↵");
   melody.forEach((character) => {
     const characterSpan = document.createElement("span");
     characterSpan.innerText = character;
@@ -66,4 +71,50 @@ function processUserTypingInput() {
   });
 }
 
-processUserTypingInput();
+function playNoteById(noteId) {
+  switch (noteId) {
+    case "c3":
+    case "d3":
+    case "e3":
+    case "f3":
+    case "g3":
+    case "a3":
+    case "b3":
+    case "c4":
+    case "d4":
+    case "e4":
+    case "f4":
+    case "g4":
+    case "a4":
+    case "b4":
+    case "c5":
+    case "d5":
+    case "e5":
+    case "f5":
+    case "g5":
+    case "a5":
+    case "b5":
+    case "c6":
+      synth.triggerAttackRelease(noteId.toUpperCase(), "4n");
+      break;
+    case "white":
+      playNoise("white");
+      break;
+    case "brown":
+      playNoise("brown");
+      break;
+  }
+  document.addEventListener("keydown", function (event) {
+    if (Tone.context.state !== "running") {
+      Tone.start();
+    }
+
+    const noteId = keyDownNoteMapping[event.code];
+    if (noteId) {
+      playNoteById(noteId);
+      console.log(event.code);
+    }
+  });
+}
+
+document.addEventListener("DOMContentLoaded", processUserTypingInput);
