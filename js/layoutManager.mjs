@@ -1,14 +1,14 @@
-let currentLayout = "azerty";
+import initializeApp from "./initializeApp.mjs";
+let currentLayout;
 
 const layoutManager = {
   toggleLayout() {
-    const button = document.getElementById("toggleLayout");
-    currentLayout = button.innerHTML.toLowerCase();
-    currentLayout = currentLayout === "qwerty" ? "azerty" : "qwerty";
-    button.innerHTML = currentLayout.toUpperCase();
+    currentLayout = currentLayout === "QWERTY" ? "AZERTY" : "QWERTY";
+    initializeApp(currentLayout);
   },
 
   getCurrentLayout() {
+    currentLayout = currentLayout === undefined ? "AZERTY" : currentLayout;
     return currentLayout;
   },
 };

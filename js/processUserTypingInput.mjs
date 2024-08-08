@@ -5,15 +5,15 @@ import initializeApp from "./initializeApp.mjs";
 import playNote from "./playNote.mjs";
 import layoutManager from "./layoutManager.mjs";
 
-let textToNoteMapping;
+export default function processUserTypingInput(input) {
+  let textToNoteMapping;
+  var input = input;
 
-if (layoutManager.getCurrentLayout() === "azerty") {
-  textToNoteMapping = azertyToNote();
-} else if (layoutManager.getCurrentLayout() === "qwerty") {
-  textToNoteMapping = qwertyToNote();
-}
-
-export default function processUserTypingInput() {
+  if (input === "AZERTY") {
+    textToNoteMapping = azertyToNote();
+  } else if (input === "QWERTY") {
+    textToNoteMapping = qwertyToNote();
+  }
   const sentenceDisplayElement = document.getElementById("sentenceDisplay");
   const inputElement = document.getElementById("typeInput");
 
@@ -46,7 +46,10 @@ export default function processUserTypingInput() {
           character !== "↵" && // Exclude newline
           event.data !== null
         ) {
-          console.log(event.data);
+          console.log(
+            event.data + " " + textToNoteMapping[character] + " " + input,
+          );
+          console.log(textToNoteMapping);
           playNote(textToNoteMapping[character]);
         }
       } else {

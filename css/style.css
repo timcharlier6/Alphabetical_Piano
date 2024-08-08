@@ -84,3 +84,35 @@ main {
   opacity: 0;
   /* Make the textarea invisible */
 }
+
+/* Media Queries */
+
+/* For tablets (portrait and landscape) */
+@media (max-width: 768px) {
+  :root {
+    --fs-header: 0.9rem;
+    --fs-text: 1.2rem;
+    --pad-text: 0.8rem 1.5rem;
+  }
+
+  .container {
+    width: 80%;
+  }
+}
+
+/* For mobile phones (portrait and landscape) */
+@media (max-width: 480px) {
+  :root {
+    --fs-header: 0.8rem;
+    --fs-text: 1rem;
+    --pad-text: 0.5rem 1rem;
+  }
+
+  .container {
+    width: 100%;
+  }
+
+  header {
+    padding: 0.5rem 0;
+  }
+}
