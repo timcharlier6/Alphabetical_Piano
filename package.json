@@ -1,0 +1,12 @@
+{
+  "name": "alphabetical_piano",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./js/main.js",
+  "type": "module",
+  "scripts": {
+    "test": "nodemon ./js/main.js -w"
+  },
+  "author": "Tim",
+  "license": "ISC"
+}
