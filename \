@@ -1,5 +1,8 @@
+import { melodyToQwerty } from "./melodyToQwerty.mjs";
 import getNextMelody from "./getNextMelody.mjs";
-console.log(getNextMelody());
+
+const melody = melodyToQwerty(getNextMelody());
+console.log(melody);
 
 function renderNewSentence(melody) {
   const sentenceDisplayElement = document.getElementById("sentenceDisplay");
