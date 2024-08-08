@@ -6,6 +6,7 @@ const twinkleTwinkle = [
   "a4",
   "a4",
   "g4",
+  " ",
   "f4",
   "f4",
   "e4",
@@ -13,6 +14,7 @@ const twinkleTwinkle = [
   "d4",
   "d4",
   "c4",
+  "\n",
 ];
 
 export const melodies = twinkleTwinkle;

@@ -1,8 +1,8 @@
-import { keyMapping } from "./keyMapping.mjs";
 import { melodies } from "./melodies.mjs";
 import { melodyToQwerty } from "./melodyToQwerty.mjs";
 
-const melody = melodyToQwerty(melodies[0], keyMapping);
+const melody = melodyToQwerty(melodies);
+console.log(melody);
 
 function getNextMelody() {
   return melody.slice();
@@ -11,7 +11,6 @@ function getNextMelody() {
 function renderNewSentence(melody) {
   const sentenceDisplayElement = document.getElementById("sentenceDisplay");
   sentenceDisplayElement.innerHTML = "";
-  melody.push("↵");
   melody.forEach((character) => {
     const characterSpan = document.createElement("span");
     characterSpan.innerText = character;

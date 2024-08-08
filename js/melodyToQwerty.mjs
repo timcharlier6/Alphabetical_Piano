@@ -1,5 +1,7 @@
+import getKeyMapping from "./getKeyMapping.mjs";
+
 export function melodyToQwerty(melody) {
-  const noteQwertyMapping = keyMapping.reduce((acc, key) => {
+  const noteQwertyMapping = getKeyMapping().reduce((acc, key) => {
     acc[key.note] = key.qwerty;
     return acc;
   }, {});
