@@ -1,25 +1,9 @@
-import { melodyToQwerty } from "./melodyToQwerty.mjs";
-import getNextMelody from "./getNextMelody.mjs";
+import renderNewSentence from "./renderNewSentence.mjs";
+import initializeApp from "./initializeApp.mjs";
 
-const melody = melodyToQwerty(getNextMelody());
-console.log(melody);
-
-function renderNewSentence(melody) {
-  const sentenceDisplayElement = document.getElementById("sentenceDisplay");
-  sentenceDisplayElement.innerHTML = "";
-  melody.forEach((character) => {
-    const characterSpan = document.createElement("span");
-    characterSpan.innerText = character;
-    sentenceDisplayElement.appendChild(characterSpan);
-  });
-}
-
-function processUserTypingInput() {
+export default function processUserTypingInput() {
   const sentenceDisplayElement = document.getElementById("sentenceDisplay");
   const inputElement = document.getElementById("typeInput");
-
-  let nextMelody = getNextMelody();
-  renderNewSentence(nextMelody);
 
   inputElement.addEventListener("input", () => {
     let arrayValue = inputElement.value.split("");
@@ -55,11 +39,12 @@ function processUserTypingInput() {
     }
 
     if (arrayValue.length === arraySentence.length && correct) {
-      nextMelody = getNextMelody();
-      renderNewSentence(nextMelody);
+      initializeApp();
+      inputElement.value = "";
+    }
+
+    if (arrayValue.length >= arraySentence.length && !correct) {
       inputElement.value = "";
     }
   });
 }
-
-processUserTypingInput();
