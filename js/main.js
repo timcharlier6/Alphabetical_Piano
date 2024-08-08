@@ -1,5 +1,6 @@
 import getNextMelody from "./getNextMelody.mjs";
 import { melodyToQwerty } from "./melodyToQwerty.mjs";
+import renderNewSentence from "./renderNewSentence.mjs";
 
 function initializeApp() {
   const h2Element = document.getElementById("songTitle");
@@ -9,16 +10,6 @@ function initializeApp() {
 }
 
 document.addEventListener("DOMContentLoaded", initializeApp);
-
-function renderNewSentence(melody) {
-  const sentenceDisplayElement = document.getElementById("sentenceDisplay");
-  sentenceDisplayElement.innerHTML = "";
-  melody.forEach((character) => {
-    const characterSpan = document.createElement("span");
-    characterSpan.innerText = character;
-    sentenceDisplayElement.appendChild(characterSpan);
-  });
-}
 
 function processUserTypingInput() {
   const sentenceDisplayElement = document.getElementById("sentenceDisplay");
