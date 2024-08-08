@@ -1,4 +1,4 @@
-let currentLayout = "qwerty";
+let currentLayout = "azerty";
 
 const layoutManager = {
   toggleLayout() {

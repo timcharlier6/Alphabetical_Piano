@@ -1,9 +1,17 @@
 import renderNewSentence from "./renderNewSentence.mjs";
 import qwertyToNote from "./qwertyToNote.mjs";
+import azertyToNote from "./azertyToNote.mjs";
 import initializeApp from "./initializeApp.mjs";
 import playNote from "./playNote.mjs";
+import layoutManager from "./layoutManager.mjs";
 
-let qwertyToNoteMapping = qwertyToNote();
+let textToNoteMapping;
+
+if (layoutManager.getCurrentLayout() === "azerty") {
+  textToNoteMapping = azertyToNote();
+} else if (layoutManager.getCurrentLayout() === "qwerty") {
+  textToNoteMapping = qwertyToNote();
+}
 
 export default function processUserTypingInput() {
   const sentenceDisplayElement = document.getElementById("sentenceDisplay");
@@ -33,13 +41,13 @@ export default function processUserTypingInput() {
         characterSpan.classList.remove("incorrect", "underline");
         if (
           index === arrayValue.length - 1 && // Ensure it's the current character
-          qwertyToNoteMapping[character] && // Ensure there is a mapped note
+          textToNoteMapping[character] && // Ensure there is a mapped note
           character !== "␣" && // Exclude space
           character !== "↵" && // Exclude newline
           event.data !== null
         ) {
           console.log(event.data);
-          playNote(qwertyToNoteMapping[character]);
+          playNote(textToNoteMapping[character]);
         }
       } else {
         characterSpan.classList.remove("correct");

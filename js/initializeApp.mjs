@@ -1,6 +1,7 @@
 import getNextMelody from "./getNextMelody.mjs";
 import renderNewSentence from "./renderNewSentence.mjs";
 import melodyToQwerty from "./melodyToQwerty.mjs";
+import melodyToAzerty from "./melodyToAzerty.mjs";
 import processUserTypingInput from "./processUserTypingInput.mjs";
 import layoutManager from "./layoutManager.mjs";
 
@@ -10,7 +11,12 @@ export default function initializeApp() {
   buttonElement.addEventListener("click", layoutManager.toggleLayout);
   const h2Element = document.getElementById("songTitle");
   const nextMelody = getNextMelody();
-  h2Element.innerText = nextMelody[0].english_name;
-  renderNewSentence(melodyToQwerty(nextMelody[0].notes));
+  if (layoutManager.getCurrentLayout() === "azerty") {
+    renderNewSentence(melodyToAzerty(nextMelody[0].notes));
+    h2Element.innerText = nextMelody[0].french_name;
+  } else if (layoutManager.getCurrentLayout() === "qwerty") {
+    h2Element.innerText = nextMelody[0].english_name;
+    renderNewSentence(melodyToQwerty(nextMelody[0].notes));
+  }
   processUserTypingInput();
 }
