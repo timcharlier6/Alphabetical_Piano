@@ -1,20 +1,8 @@
-const melody = [
-  "a",
-  "a",
-  "j",
-  "j",
-  "k",
-  "k",
-  "j",
-  "␣",
-  "f",
-  "f",
-  "d",
-  "d",
-  "s",
-  "s",
-  "a",
-];
+import { keyMapping } from "./keyMapping.mjs";
+import { melodies } from "./melodies.mjs";
+import { melodyToQwerty } from "./melodyToQwerty.mjs";
+
+const melody = melodyToQwerty(melodies[0], keyMapping);
 
 function getNextMelody() {
   return melody.slice();
