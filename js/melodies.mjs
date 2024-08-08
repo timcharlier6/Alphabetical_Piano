@@ -187,7 +187,7 @@ export const melodies = [
     ],
   },
   {
-    english_name: "Frère Jacques",
+    english_name: "Brother John",
     french_name: "Frère Jacques",
     notes: [
       "c4",

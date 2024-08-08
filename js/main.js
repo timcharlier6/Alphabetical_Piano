@@ -1,5 +1,14 @@
 import getNextMelody from "./getNextMelody.mjs";
-console.log(getNextMelody());
+import { melodyToQwerty } from "./melodyToQwerty.mjs";
+
+function initializeApp() {
+  const h2Element = document.getElementById("songTitle");
+  const nextMelody = getNextMelody();
+  h2Element.innerText = nextMelody[0].english_name;
+  renderNewSentence(melodyToQwerty(nextMelody[0].notes));
+}
+
+document.addEventListener("DOMContentLoaded", initializeApp);
 
 function renderNewSentence(melody) {
   const sentenceDisplayElement = document.getElementById("sentenceDisplay");
@@ -14,9 +23,6 @@ function renderNewSentence(melody) {
 function processUserTypingInput() {
   const sentenceDisplayElement = document.getElementById("sentenceDisplay");
   const inputElement = document.getElementById("typeInput");
-
-  let nextMelody = getNextMelody();
-  renderNewSentence(nextMelody);
 
   inputElement.addEventListener("input", () => {
     let arrayValue = inputElement.value.split("");
@@ -52,8 +58,11 @@ function processUserTypingInput() {
     }
 
     if (arrayValue.length === arraySentence.length && correct) {
-      nextMelody = getNextMelody();
-      renderNewSentence(nextMelody);
+      initializeApp();
+      inputElement.value = "";
+    }
+
+    if (arrayValue.length >= arraySentence.length && !correct) {
       inputElement.value = "";
     }
   });
