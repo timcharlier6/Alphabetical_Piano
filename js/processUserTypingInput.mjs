@@ -1,5 +1,9 @@
 import renderNewSentence from "./renderNewSentence.mjs";
+import qwertyToNote from "./qwertyToNote.mjs";
 import initializeApp from "./initializeApp.mjs";
+import playNote from "./playNote.mjs";
+
+let qwertyToNoteMapping = qwertyToNote();
 
 export default function processUserTypingInput() {
   const sentenceDisplayElement = document.getElementById("sentenceDisplay");
@@ -26,6 +30,11 @@ export default function processUserTypingInput() {
       } else if (character === characterSpan.innerText) {
         characterSpan.classList.add("correct");
         characterSpan.classList.remove("incorrect", "underline");
+        const noteId = qwertyToNoteMapping[arrayValue[arrayValue.length - 1]];
+        console.log(noteId);
+        if (noteId && noteId !== " " && noteId !== "\n") {
+          playNote(noteId);
+        }
       } else {
         characterSpan.classList.remove("correct");
         characterSpan.classList.add("incorrect");
