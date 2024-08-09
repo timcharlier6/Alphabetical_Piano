@@ -1,7 +1,3 @@
----
-author: "Tim Charlier"
----
-
 # Alphabetical Piano
 
 ## Overview
@@ -48,7 +44,7 @@ The Alphabetical Piano is an interactive typing practice tool that combines musi
 
 ## Aperçu
 
-Le Piano Alphabetic est un outil interactif de dactylographie qui combine mélodies musicales et défis de dactylographie. Les utilisateurs peuvent pratiquer la dactylographie en écoutant des mélodies et en voyant leurs performances en temps réel. Le jeu prend en charge les mises en page des claviers AZERTY et QWERTY, qui peuvent être toggled en utilisant un bouton.
+Le Piano Alphabétique est un outil interactif de dactylographie qui combine mélodies musicales et défis de dactylographie. Les utilisateurs peuvent pratiquer la dactylographie en écoutant des mélodies et en voyant leurs performances en temps réel. Le jeu prend en charge les mises en page des claviers AZERTY et QWERTY, qui peuvent être toggled en utilisant un bouton.
 
 Caractéristiques
 
