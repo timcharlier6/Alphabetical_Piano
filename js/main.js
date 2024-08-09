@@ -67,8 +67,7 @@ function displayInnerHTML(melody) {
   buttonElement.innerHTML = layoutBool
     ? "Switch to QWERTY"
     : "Switch to AZERTY";
-  console.log(melody[key]);
-  h2Element.innerHTML = "🎵  " + melody[key] + "  🎵";
+  h2Element.innerHTML = melody[key];
 }
 
 async function initializeApp() {
@@ -79,7 +78,6 @@ async function initializeApp() {
   await cacheData();
   displayText();
   melody = getRandomMelody(cachedMelodies);
-  console.log(melody);
   text = melodyToText(melody);
   displayInnerHTML(melody);
   renderSentence(text);
@@ -90,15 +88,11 @@ async function initializeApp() {
 const textToNote = () => {
   const key = getKey("character");
   const inputLength = textareaElement.value.length;
-  console.log(inputLength);
   const getCharachter = textareaElement.value[inputLength - 1];
-  console.log(getCharachter);
   const foundItem = cachedMappings.find(
     (item) => item["text"][key] === getCharachter,
   );
-  console.log(foundItem);
   const note = foundItem ? foundItem["note"] : null;
-  console.log(note);
   return note;
 };
 
@@ -127,9 +121,6 @@ const handleInput = (event) => {
   const userInput = textareaElement.value[inputLength - 1];
   let correct = true;
 
-  arrayText.forEach((item) => {
-    item.classList.remove("correct", "incorrect", "underline");
-  });
   const note = textToNote();
   arrayText.forEach((item, index) => {
     // Add incorrect for mistyped characters only
@@ -142,11 +133,10 @@ const handleInput = (event) => {
       correct = false;
     }
 
-    if (textareaElement.value[index] === item.innerText) {
+    if (event.data === item.innerText && textareaElement.value[index] === item.innerText) {
+      console.log("text", textareaElement.value[index]);
       item.classList.remove("incorrect", "underline");
       item.classList.add("correct");
-    }
-    if (index === inputLength - 1 && userInput) {
       playTone(note);
     }
   });
@@ -157,8 +147,16 @@ const handleInput = (event) => {
   }
 
   if (inputLength >= arrayText.length && !correct) {
-    textareaElement.value = "";
-    alert("GAME OVER! Try Again!");
+    setTimeout(() => {
+      displayElement.style.borderColor = "red";
+      setTimeout(() => {
+        textareaElement.value = "";
+        displayElement.style.borderColor = "";
+        arrayText.forEach((item, index) => {
+          item.classList.remove("correct", "incorrect", "underline");
+        })
+      }, 1000);
+    }, 10);
   }
 
   if (inputLength === arrayText.length && correct) {
@@ -182,7 +180,6 @@ const melodyToText = (melody) => {
     const foundItem = cachedMappings.find((item) => item["note"] === note);
     return foundItem ? foundItem["text"][key] : null;
   });
-  console.log(textArray);
   return textArray;
 };
 
@@ -190,4 +187,4 @@ const currentYear = new Date().getFullYear();
 
 const copyrightElement = document.getElementById("copyright");
 
-copyrightElement.textContent = `© ${currentYear} Tim Charlier. All rights reserved.`;
+copyrightElement.textContent = `© ${currentYear} Tim Charlier.`;

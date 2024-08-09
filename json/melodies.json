@@ -33,5 +33,25 @@
     "name": "Brother John",
     "nom": "Frère Jacques",
     "notes": "c4,d4,e4,c4,c4,d4,e4,c4,e4,f4,g4, ,e4,f4,g4, ,g4,a4,g4,f4,e4,c4,g4,a4,g4,f4,e4,c4,c4,g3,c4, ,c4,g3,c4,\n"
+  },
+  {
+    "name": "Old MacDonald",
+    "nom": "Dans la ferme de Mathurin",
+    "notes": "c4,c4,c4,g3,a3,a3,g3, ,e4,e4,d4,d4,c4,\n"
+  },
+  {
+    "name": "London Bridge",
+    "nom": "London Bridge",
+    "notes": "g4,a4,g4,f4,e4,f4,g4, ,d4,e4,f4, ,e4,f4,g4, ,g4,a4,g4,f4,e4,f4,g4, ,d4,g4,e4,c4,\n"
+  },
+  {
+    "name": "Row, Row, Row Your Boat",
+    "nom": "Rame, rame, rame ton bateau",
+    "notes": "c4,c4,c4,d4,e4,e4,d4,e4,f4,g4, ,c4,c4,c4,g4,g4,g4,e4,e4,e4,c4,c4,c4,g4,f4,e4,d4,c4,\n"
+  },
+  {
+    "name": "Silent Night", 
+    "nom": "Douce nuit",
+    "notes": "g4,a4,g4,e3, g4,a4,g4,e3, ,d5,d5,b4, ,c5,c5,g4, ,a4,a4,c5,b4,a4,g4,a4,g4,e3,\n"
   }
 ]
