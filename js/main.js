@@ -68,7 +68,7 @@ function displayInnerHTML(melody) {
     ? "Switch to QWERTY"
     : "Switch to AZERTY";
   console.log(melody[key]);
-  h2Element.innerHTML = melody[key];
+  h2Element.innerHTML = "🎵  " + melody[key] + "  🎵";
 }
 
 async function initializeApp() {
