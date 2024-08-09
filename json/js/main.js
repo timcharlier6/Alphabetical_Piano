@@ -3,48 +3,48 @@ const textareaElement = document.getElementById("typeInput");
 const displayElement = document.getElementById("sentenceDisplay");
 const h2Element = document.getElementById("songTitle");
 
-let cachedMelodies = null;
-let cachedMappings = null;
-let layoutBool = JSON.parse(localStorage.getItem("layoutBool")) || false;
+let cachedMelodies = null; 
+let cachedMappings = null; 
+let layoutBool = JSON.parse(localStorage.getItem('layoutBool')) || false;
 
 document.addEventListener("DOMContentLoaded", initializeApp);
 
 async function loadJSON(path) {
   try {
     const response = await fetch(path);
-    if (!response.ok) throw new Error("Network response was not ok");
+    if (!response.ok) throw new Error('Network response was not ok');
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Error fetching JSON:", error);
+    console.error('Error fetching JSON:', error);
   }
 }
 
 async function cacheData() {
-  const melodiesData = await loadJSON("./json/melodies.json");
-  const mappingsData = await loadJSON("./json/mappings.json");
-  cachedMelodies = melodiesData;
-  cachedMappings = mappingsData;
+    const melodiesData = await loadJSON('./json/melodies.json');
+    const mappingsData = await loadJSON('./json/mappings.json');
+    cachedMelodies = melodiesData; 
+    cachedMappings = mappingsData;
 }
 
 function changeLayout() {
   layoutBool = !layoutBool;
-  localStorage.setItem("layoutBool", JSON.stringify(layoutBool));
-  location.reload();
+  localStorage.setItem('layoutBool', JSON.stringify(layoutBool));
+  location.reload(); 
 }
 
 function displayText() {
   if (cachedMelodies) {
     const randomMelody = getRandomMelody(cachedMelodies);
-    document.getElementById("sentenceDisplay").innerHTML = randomMelody;
+    document.getElementById('sentenceDisplay').innerHTML = randomMelody;
   } else {
-    console.log("Data not loaded yet.");
+    console.log('Data not loaded yet.');
   }
 }
 
 function getKey(input) {
-  if (input === "melody") return layoutBool ? "nom" : "name";
-  if (input === "character") return layoutBool ? "azerty" : "qwerty";
+  if (input === "melody") return layoutBool ? 'nom' : 'name';
+  if (input === "character") return layoutBool ? 'azerty' : 'qwerty';
 }
 
 function getRandomMelody(cachedMelodies) {
@@ -52,9 +52,7 @@ function getRandomMelody(cachedMelodies) {
     setTimeout(() => {
       location.reload();
     }, 5000);
-    const message = layoutBool
-      ? `YOU FINISHED THE GAME!\n Thanks for playing...`
-      : `VOUS AVEZ FINI LE JEU!\n Merci d'avoir joué...`;
+    const message = layoutBool ? `YOU FINISHED THE GAME!\n Thanks for playing...` : `VOUS AVEZ FINI LE JEU!\n Merci d'avoir joué...`;
     return message;
   }
   const randomIndex = Math.floor(Math.random() * cachedMelodies.length);
@@ -62,12 +60,11 @@ function getRandomMelody(cachedMelodies) {
   return randomMelody;
 }
 
+
+
 function displayInnerHTML(melody) {
   const key = getKey("melody");
-  buttonElement.innerHTML = layoutBool
-    ? "Switch to QWERTY"
-    : "Switch to AZERTY";
-  console.log(melody[key]);
+  buttonElement.innerHTML = layoutBool ? "Switch to QWERTY" : "Switch to AZERTY";
   h2Element.innerHTML = melody[key];
 }
 
@@ -92,7 +89,7 @@ const textToNote = () => {
   const inputLength = textareaElement.value.length;
   console.log(inputLength);
   const getCharachter = textareaElement.value[inputLength - 1];
-  console.log(getCharachter);
+  console.log(getCharachter); 
   const foundItem = cachedMappings.find(
     (item) => item["text"][key] === getCharachter,
   );
@@ -103,7 +100,7 @@ const textToNote = () => {
 };
 
 const playTone = (note) => {
-  if (Tone.context.state === "suspended") Tone.start();
+  if (Tone.context.state === 'suspended') Tone.start();
   let lastTriggerTime = 0;
   const minGap = 50;
   const synth = new Tone.Synth().toDestination();
@@ -133,10 +130,7 @@ const handleInput = (event) => {
   const note = textToNote();
   arrayText.forEach((item, index) => {
     // Add incorrect for mistyped characters only
-    if (
-      textareaElement.value[index] !== item.innerText &&
-      index < inputLength
-    ) {
+    if (textareaElement.value[index] !== item.innerText && index < inputLength) {
       item.classList.remove("correct", "underline");
       item.classList.add("incorrect");
       correct = false;
@@ -145,7 +139,7 @@ const handleInput = (event) => {
     if (textareaElement.value[index] === item.innerText) {
       item.classList.remove("incorrect", "underline");
       item.classList.add("correct");
-    }
+    } 
     if (index === inputLength - 1 && userInput) {
       playTone(note);
     }
@@ -183,11 +177,11 @@ const melodyToText = (melody) => {
     return foundItem ? foundItem["text"][key] : null;
   });
   console.log(textArray);
-  return textArray;
+   return textArray;
 };
 
 const currentYear = new Date().getFullYear();
 
-const copyrightElement = document.getElementById("copyright");
+const copyrightElement = document.getElementById('copyright');
 
 copyrightElement.textContent = `© ${currentYear} Tim Charlier. All rights reserved.`;
