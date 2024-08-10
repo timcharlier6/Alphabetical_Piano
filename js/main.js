@@ -81,8 +81,10 @@ async function initializeApp() {
   text = melodyToText(melody);
   displayInnerHTML(melody);
   renderSentence(text);
+  const arrayText = Array.from(displayElement.querySelectorAll("span"));
+  if (textareaElement.value === "") arrayText[0].classList.add("underline");
   textareaElement.value = "";
-  textareaElement.addEventListener("input", handleInput);
+  textareaElement.addEventListener("input", (event) => handleInput(event, arrayText));
 }
 
 const textToNote = () => {
@@ -108,7 +110,7 @@ const playTone = (note) => {
   }
 };
 
-const handleInput = (event) => {
+const handleInput = (event, arrayText) => {
   let arrayValue = textareaElement.value.split("");
   if (arrayValue[arrayValue.length - 1] === " ") {
     arrayValue[arrayValue.length - 1] = "␣";
@@ -117,13 +119,14 @@ const handleInput = (event) => {
   }
   textareaElement.value = arrayValue.join("");
   const inputLength = textareaElement.value.length;
-  const arrayText = Array.from(displayElement.querySelectorAll("span"));
-  const userInput = textareaElement.value[inputLength - 1];
+  const userInput = textareaElement.value;
   let correct = true;
 
   const note = textToNote();
   arrayText.forEach((item, index) => {
-    // Add incorrect for mistyped characters only
+    if (event.inputType === "deleteContentBackward") {
+      item.classList.remove("correct", "incorrect", "underline");
+    }
     if (
       textareaElement.value[index] !== item.innerText &&
       index < inputLength
@@ -133,8 +136,10 @@ const handleInput = (event) => {
       correct = false;
     }
 
-    if (event.data === item.innerText && textareaElement.value[index] === item.innerText) {
-      console.log("text", textareaElement.value[index]);
+    if (  
+      (userInput[index] === item.innerText && event.data === item.innerText) || 
+      (event.data === " " && item.innerText === "␣" && userInput[index] === item.innerText) || 
+      (userInput[index] === "\n" && item.innerText === "↵" && userInput[index] === item.innerText)) {
       item.classList.remove("incorrect", "underline");
       item.classList.add("correct");
       playTone(note);
@@ -153,7 +158,7 @@ const handleInput = (event) => {
         textareaElement.value = "";
         displayElement.style.borderColor = "";
         arrayText.forEach((item, index) => {
-          item.classList.remove("correct", "incorrect", "underline");
+        item.classList.remove("correct", "incorrect", "underline");
         })
       }, 1000);
     }, 10);

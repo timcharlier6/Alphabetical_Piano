@@ -123,6 +123,8 @@ h1 {
 
 .underline {
   text-decoration: underline;
+  text-decoration-skip-ink: none;
+  text-underline-offset: 1rem; 
 }
 
 .hidden {
