@@ -84,7 +84,9 @@ async function initializeApp() {
   const arrayText = Array.from(displayElement.querySelectorAll("span"));
   if (textareaElement.value === "") arrayText[0].classList.add("underline");
   textareaElement.value = "";
-  textareaElement.addEventListener("input", (event) => handleInput(event, arrayText));
+  textareaElement.addEventListener("input", (event) =>
+    handleInput(event, arrayText)
+  );
 }
 
 const textToNote = () => {
@@ -92,7 +94,7 @@ const textToNote = () => {
   const inputLength = textareaElement.value.length;
   const getCharachter = textareaElement.value[inputLength - 1];
   const foundItem = cachedMappings.find(
-    (item) => item["text"][key] === getCharachter,
+    (item) => item["text"][key] === getCharachter
   );
   const note = foundItem ? foundItem["note"] : null;
   return note;
@@ -125,7 +127,15 @@ const handleInput = (event, arrayText) => {
   const note = textToNote();
   arrayText.forEach((item, index) => {
     if (event.inputType === "deleteContentBackward") {
-      item.classList.remove("correct", "incorrect", "underline");
+      const cursorPosition = event.target.selectionStart;
+      arrayText[cursorPosition].classList.remove(
+        "correct",
+        "incorrect",
+        "underline"
+      );
+      arrayText[cursorPosition + 1].classList.remove("underline");
+      // log the index of the deleted character
+      console.log(cursorPosition);
     }
     if (
       textareaElement.value[index] !== item.innerText &&
@@ -136,10 +146,15 @@ const handleInput = (event, arrayText) => {
       correct = false;
     }
 
-    if (  
-      (userInput[index] === item.innerText && event.data === item.innerText) || 
-      (event.data === " " && item.innerText === "␣" && userInput[index] === item.innerText) || 
-      (userInput[index] === "\n" && item.innerText === "↵" && userInput[index] === item.innerText)) {
+    if (
+      (userInput[index] === item.innerText && event.data === item.innerText) ||
+      (event.data === " " &&
+        item.innerText === "␣" &&
+        userInput[index] === item.innerText) ||
+      (userInput[index] === "\n" &&
+        item.innerText === "↵" &&
+        userInput[index] === item.innerText)
+    ) {
       item.classList.remove("incorrect", "underline");
       item.classList.add("correct");
       playTone(note);
@@ -158,8 +173,8 @@ const handleInput = (event, arrayText) => {
         textareaElement.value = "";
         displayElement.style.borderColor = "";
         arrayText.forEach((item, index) => {
-        item.classList.remove("correct", "incorrect", "underline");
-        })
+          item.classList.remove("correct", "incorrect", "underline");
+        });
       }, 1000);
     }, 10);
   }
